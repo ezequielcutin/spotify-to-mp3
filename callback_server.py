@@ -40,7 +40,7 @@ def callback():
     token_info = auth.retrieve_token(code)
     if token_info:
         session['token'] = token_info['access_token']
-        return redirect(url_for('download_page'))
+        return render_template('download.html')
     else:
         return "Authorization failed."
 
