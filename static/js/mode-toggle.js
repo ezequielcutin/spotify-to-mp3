@@ -1,11 +1,20 @@
+// Check for saved theme preference or default to light mode
+let isDarkMode = localStorage.getItem('isDarkMode') === 'true' || false;
+
+// Apply the saved theme immediately
+document.addEventListener('DOMContentLoaded', applyTheme);
+
+function applyTheme() {
+    if (isDarkMode) {
+        toggleMode(false);
+    }
+}
 
 const rainContainer = document.getElementById('rain');
-const toggle = document.getElementById('toggle');
 const modeIcon = document.getElementById('mode-icon');
 const dayLabel = document.getElementById('day-label');
 const nightLabel = document.getElementById('night-label');
 const title = document.querySelector('h1');
-let isDarkMode = false;
 let rainInterval;
 
 let dropCount = 0;
@@ -30,8 +39,8 @@ function createSingleDrop() {
     setTimeout(() => drop.remove(), 15000);
 }
 
-function toggleMode() {
-    isDarkMode = !isDarkMode;
+function toggleMode(savePreference = true) {
+    isDarkMode = savePreference ? !isDarkMode : isDarkMode;
     document.body.style.backgroundColor = isDarkMode ? '#121212' : '#ffffff';
     document.body.style.color = isDarkMode ? '#1db954' : '#000000';
     rainContainer.style.display = isDarkMode ? 'block' : 'none';
@@ -48,6 +57,10 @@ function toggleMode() {
         clearInterval(rainInterval);
         rainInterval = null;
     }
+
+    if (savePreference) {
+        localStorage.setItem('isDarkMode', isDarkMode);
+    }
 }
 
-toggle.addEventListener('click', toggleMode);
+toggle.addEventListener('click', () => toggleMode(true));
