@@ -1,0 +1,77 @@
+.toggle-container {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.toggle {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px;
+}
+
+.toggle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle.active {
+    background-color: #1db954;
+}
+
+.toggle.active::before {
+    transform: translateX(30px);
+}
+
+#mode-icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.3s;
+    font-size: 16px;
+    color: black;
+}
+
+.toggle.active #mode-icon {
+    left: 45px;
+}
+
+.toggle #mode-icon {
+    left: 15px;
+}
+
+.btn-custom {
+    background-color: #1db954;
+    color: white;
+}
+
+.mode-label {
+    color: #000000;
+}
+
+.drop {
+    position: absolute;
+    top: -20px;
+    font-size: 14px;
+    animation: fall 15s linear;
+    color: #1db954;
+    z-index: -1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}

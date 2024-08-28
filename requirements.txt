@@ -1,0 +1,11 @@
+spotipy==2.24.0
+redis>=3.5.3
+requests>=2.25.0
+urllib3>=1.26.0
+charset-normalizer<4,>=2
+idna<4,>=2.5
+certifi>=2017.4.17
+mutagen>=1.46.0
+python-dotenv>=1.0.0
+Flask>=2.3.2
+

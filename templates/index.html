@@ -1,0 +1,39 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify to MP3</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div id="mode-toggle" class="toggle-container">
+        <span id="day-label" class="mode-label">Day Mode</span>
+        <div class="toggle" id="toggle">
+            <i id="mode-icon" class="fas fa-sun"></i>
+        </div>
+        <span id="night-label" class="mode-label">Night Mode</span>
+    </div>
+    <div class="container text-center">
+        <h1>Spotify to MP3 Downloader</h1>
+        <form action="/download" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="track_url" placeholder="Enter Spotify Track URL" required>
+            </div>
+            <button type="submit" class="btn btn-custom">Download</button>
+        </form>
+    </div>
+    <div class="rain" id="rain"></div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/mode-toggle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form-handler.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env
+config.json
+secrets.json
+credentials.json
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.properties
+*.env
