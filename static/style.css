@@ -75,3 +75,33 @@
         transform: translateY(100vh);
     }
 }
+
+.matrix-loading {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #00ff00;
+    padding: 20px;
+    background-color: #000;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.matrix-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    animation: matrix-scroll 30s linear infinite;
+}
+
+@keyframes matrix-scroll {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: -100%;
+    }
+}
