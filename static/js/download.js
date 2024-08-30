@@ -1,19 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
     const matrixLoading = document.getElementById('matrix-loading');
     const downloadButton = document.getElementById('downloadButton');
+    const timeToHack = 12000;
 
     function createMatrixEffect() {
         matrixLoading.innerHTML = '';
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const width = 40;
-        const height = 20;
-
         const matrixContent = document.createElement('div');
         matrixContent.className = 'matrix-content';
 
-        for (let i = 0; i < height; i++) {
+        const containerWidth = matrixLoading.offsetWidth;
+        const charWidth = 14; // Approximate width of a character in pixels
+        const charsPerRow = Math.floor(containerWidth / charWidth);
+        const rows = Math.ceil(window.innerHeight / 20); // Adjust based on font size
+
+        for (let i = 0; i < rows; i++) {
             const row = document.createElement('div');
-            for (let j = 0; j < width; j++) {
+            row.className = 'matrix-row';
+            for (let j = 0; j < charsPerRow; j++) {
                 const span = document.createElement('span');
                 span.textContent = chars[Math.floor(Math.random() * chars.length)];
                 row.appendChild(span);
@@ -36,11 +40,22 @@ document.addEventListener('DOMContentLoaded', function() {
     createMatrixEffect();
     const matrixInterval = setInterval(updateMatrix, 100);
 
+
+    setTimeout(() => {
+        clearInterval(matrixInterval);
+        matrixLoading.style.display = 'none';
+        hackingMessage.style.display = 'none';
+        downloadButton.style.display = 'inline-block';
+    }, timeToHack);
+
+    // Recreate matrix effect on window resize
+    window.addEventListener('resize', createMatrixEffect);
+
     setTimeout(() => {
         clearInterval(matrixInterval);
         matrixLoading.style.display = 'none';
         downloadButton.style.display = 'inline-block';
-    }, 5000);
+    }, timeToHack);
 
     downloadButton.addEventListener('click', function() {
         fetch('/download', {

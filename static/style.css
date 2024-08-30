@@ -80,28 +80,56 @@
     font-family: 'Courier New', monospace;
     font-size: 14px;
     color: #00ff00;
-    padding: 20px;
-    background-color: #000;
+    /* background-color: #000; */
     border-radius: 5px;
     margin-bottom: 20px;
-    height: 500px;
+    height: 100vh;
     overflow: hidden;
     position: relative;
+    padding: 0; /* Remove padding */
+}
+
+.matrix-loading, #downloadButton {
+    margin-top: 50px;
+}
+
+.hacking-message {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #00ff00;
+    position: relative;
+    top: 50px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 .matrix-content {
     position: absolute;
-    top: 0;
+    top: -100%;
     left: 0;
     right: 0;
     animation: matrix-scroll 30s linear infinite;
+    width: 100%; /* Ensure full width */
+    display: flex;
+    flex-direction: column;
+}
+
+.matrix-row {
+    display: flex;
+    justify-content: space-between; /* Spread characters evenly */
+    width: 100%;
 }
 
 @keyframes matrix-scroll {
     0% {
-        top: 100%;
+        top: -100%;
     }
     100% {
-        top: -100%;
+        top: 100%;
     }
 }
