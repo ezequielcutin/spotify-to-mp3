@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const matrixLoading = document.getElementById('matrix-loading');
     const downloadButton = document.getElementById('downloadButton');
+    const hackingMessage = document.getElementById('hackingMessage');
     const timeToHack = 12000;
 
     function createMatrixEffect() {
@@ -37,25 +38,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    createMatrixEffect();
-    const matrixInterval = setInterval(updateMatrix, 100);
+    function typewriterEffect(element, text, speed, callback) {
+        let i = 0;
+        element.style.display = 'inline-block';
+        element.textContent = '';
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            } else if (callback) {
+                callback();
+            }
+        }
+        type();
+    }
 
+    createMatrixEffect();
+    const matrixInterval = setInterval(updateMatrix, 50);
 
     setTimeout(() => {
         clearInterval(matrixInterval);
         matrixLoading.style.display = 'none';
         hackingMessage.style.display = 'none';
-        downloadButton.style.display = 'inline-block';
+        
+        // Start typewriter effect for the button
+        typewriterEffect(downloadButton, 'Download Track', 50, () => {
+            downloadButton.classList.add('button-glow');
+        });
     }, timeToHack);
 
     // Recreate matrix effect on window resize
     window.addEventListener('resize', createMatrixEffect);
-
-    setTimeout(() => {
-        clearInterval(matrixInterval);
-        matrixLoading.style.display = 'none';
-        downloadButton.style.display = 'inline-block';
-    }, timeToHack);
 
     downloadButton.addEventListener('click', function() {
         fetch('/download', {

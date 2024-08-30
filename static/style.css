@@ -55,7 +55,28 @@
 .btn-custom {
     background-color: #1db954;
     color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
+
+.button-glow {
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 2.5px #1db954, 0 0 5px #1db954, 0 0 7.5px #1db954;
+    }
+    to {
+        box-shadow: 0 0 10px #1db954, 0 0 10px #1db954, 0 0 15px #1db954;
+    }
+}
+
+
 
 .mode-label {
     color: #000000;
