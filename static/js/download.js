@@ -64,9 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
         matrixLoading.style.display = 'none';
         hackingMessage.style.display = 'none';
         
-        // Start typewriter effect for the button
+        // Show both buttons immediately
+        downloadButton.style.display = 'inline-block';
+        document.getElementById('downloadAnotherButton').style.display = 'inline-block';
+    
+        // Start typewriter effect for both buttons simultaneously
         typewriterEffect(downloadButton, 'Download Track', 50, () => {
             downloadButton.classList.add('button-glow');
+        });
+        typewriterEffect(document.getElementById('downloadAnotherButton'), 'Download Another Track', 50, () => {
+            document.getElementById('downloadAnotherButton').classList.add('button-glow');
         });
     }, timeToHack);
 
