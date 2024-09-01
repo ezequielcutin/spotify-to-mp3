@@ -13,7 +13,7 @@ def get_track_data(spotify_client, track_id):
     return {
         'name': track['name'],
         'artist': track['artists'][0]['name'],
-        'url': track['preview_url'],
+        'query': f"{track['name']} {track['artists'][0]['name']}",
         'album': track['album']['name'],
         'cover_art': track['album']['images'][0]['url'] if track['album']['images'] else None
     }

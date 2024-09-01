@@ -64,12 +64,15 @@ def download():
     track_data = api.get_track_data(spotify_client, track_url.split('/')[-1].split('?')[0])
     
     # Download MP3 file
-    mp3_file = mp3_downloader.download_track(track_data['url'], track_data)
-    
-    # Enhance metadata
-    enhancer.enhance_metadata(mp3_file, track_data)
-    
-    return send_file(mp3_file, as_attachment=True, download_name=f"{track_data['name']}.mp3")
+    try:
+        mp3_file = mp3_downloader.download_track(track_data)
+        
+        # Enhance metadata
+        enhancer.enhance_metadata(mp3_file, track_data)
+        
+        return send_file(mp3_file, as_attachment=True, download_name=f"{track_data['name']}.mp3")
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
     app.run(port=8888)  # Ensure this matches your redirect URI
