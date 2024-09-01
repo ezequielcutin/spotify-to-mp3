@@ -134,7 +134,7 @@
     top: -100%;
     left: 0;
     right: 0;
-    animation: matrix-scroll 30s linear infinite;
+    animation: matrix-scroll var(--matrix-animation-duration, 30s) linear;
     width: 100%; /* Ensure full width */
     display: flex;
     flex-direction: column;

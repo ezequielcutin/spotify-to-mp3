@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const matrixLoading = document.getElementById('matrix-loading');
     const downloadButton = document.getElementById('downloadButton');
     const hackingMessage = document.getElementById('hackingMessage');
-    const timeToHack = 12000;
+    const timeToHack = 5000;
 
     function createMatrixEffect() {
         matrixLoading.innerHTML = '';
@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     createMatrixEffect();
     const matrixInterval = setInterval(updateMatrix, 50);
+    document.documentElement.style.setProperty('--matrix-animation-duration', '10s');
+
 
     setTimeout(() => {
         clearInterval(matrixInterval);
