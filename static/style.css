@@ -55,7 +55,63 @@
 .btn-custom {
     background-color: #1db954;
     color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
+
+#downloadAnotherButton {
+    background-color: #b91d82; /* Complementary magenta color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#downloadAnotherButton:hover {
+    background-color: #a01a70; /* Darker shade for hover effect */
+    color:black;
+}
+
+.button-glow {
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 2.5px var(--glow-color), 0 0 5px var(--glow-color), 0 0 7.5px var(--glow-color);
+    }
+    to {
+        box-shadow: 0 0 10px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color);
+    }
+}
+
+#downloadButton {
+    --glow-color: #1db954;
+}
+
+#downloadAnotherButton {
+    --glow-color: #b91d82;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.button-container .btn-custom {
+    margin: 10px 0;
+}
+
+
 
 .mode-label {
     color: #000000;
@@ -73,5 +129,63 @@
 @keyframes fall {
     to {
         transform: translateY(100vh);
+    }
+}
+
+.matrix-loading {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #00ff00;
+    /* background-color: #000; */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    padding: 0; /* Remove padding */
+}
+
+.matrix-loading, #downloadButton {
+    margin-top: 50px;
+}
+
+.hacking-message {
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #00ff00;
+    position: relative;
+    top: 50px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.matrix-content {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    right: 0;
+    animation: matrix-scroll var(--matrix-animation-duration, 30s) linear;
+    width: 100%; /* Ensure full width */
+    display: flex;
+    flex-direction: column;
+}
+
+.matrix-row {
+    display: flex;
+    justify-content: space-between; /* Spread characters evenly */
+    width: 100%;
+}
+
+@keyframes matrix-scroll {
+    0% {
+        top: -100%;
+    }
+    100% {
+        top: 100%;
     }
 }
