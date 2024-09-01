@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const matrixLoading = document.getElementById('matrix-loading');
     const downloadButton = document.getElementById('downloadButton');
+    const downloadAnotherButton = document.getElementById('downloadAnotherButton');
     const hackingMessage = document.getElementById('hackingMessage');
+    const downloadingMessage = document.getElementById('downloadingMessage');
     const timeToHack = 5000;
 
     function createMatrixEffect() {
@@ -81,6 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', createMatrixEffect);
 
     downloadButton.addEventListener('click', function() {
+        downloadButton.style.display = 'none';
+        downloadingMessage.style.display = 'block';
+        downloadingMessage.style.animation = 'blink 1s infinite';
+    
         fetch('/download', {
             method: 'POST'
         })
@@ -94,7 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+    
+            // Hide downloading message and show download another button
+            downloadingMessage.style.display = 'none';
+            downloadAnotherButton.style.display = 'inline-block';
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            downloadingMessage.textContent = 'Download failed. Please try again.';
+            downloadingMessage.style.animation = 'none';
+            downloadButton.style.display = 'inline-block';
+        });
     });
 });

@@ -4,6 +4,8 @@ This module handles downloading MP3 files from given URLs.
 
 import os
 from .youtube_downloader import search_youtube, download_audio
+from .youtube_downloader import YouTubeVideoNotFoundError
+
 
 def download_track(track_info):
     """
@@ -18,8 +20,9 @@ def download_track(track_info):
     api_key = os.getenv('YOUTUBE_API_KEY')
     video_id = search_youtube(track_info['query'], api_key)
     if video_id:
-        output_path = os.path.join(os.path.expanduser('~/Downloads'), f"{track_info['name']}_{track_info['artist']}.%(ext)s")
+        filename = f"{track_info['name']}_{track_info['artist']}.%(ext)s"
+        output_path = os.path.join(os.path.expanduser('~/Downloads'), filename)
         download_audio(video_id, output_path)
         return output_path.replace('%(ext)s', 'mp3')
     else:
-        raise Exception("No YouTube video found for the track")
+        raise YouTubeVideoNotFoundError(f"No YouTube video found for track: {track_info['name']} by {track_info['artist']}")

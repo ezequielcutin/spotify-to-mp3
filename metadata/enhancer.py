@@ -1,6 +1,5 @@
 """Module for enhancing MP3 metadata with track information and cover art."""
 
-import os
 import requests
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3, APIC

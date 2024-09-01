@@ -11,6 +11,8 @@ import spotify.auth as auth
 import spotify.api as api
 import downloader.mp3_downloader as mp3_downloader
 import metadata.enhancer as enhancer
+from downloader.youtube_downloader import YouTubeVideoNotFoundError
+
 
 load_dotenv()
 
@@ -66,13 +68,18 @@ def download():
     # Download MP3 file
     try:
         mp3_file = mp3_downloader.download_track(track_data)
-        
         # Enhance metadata
         enhancer.enhance_metadata(mp3_file, track_data)
-        
         return send_file(mp3_file, as_attachment=True, download_name=f"{track_data['name']}.mp3")
+    except YouTubeVideoNotFoundError as e:
+        return jsonify({'error': str(e)}), 404
+    except IOError as e:
+        return jsonify({'error': f"File operation error: {str(e)}"}), 500
+    except ValueError as e:
+        return jsonify({'error': f"Value error: {str(e)}"}), 400
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        logging.error("Unexpected error: %s", str(e))
+        return jsonify({'error': "An unexpected error occurred"}), 500
 
 if __name__ == "__main__":
     app.run(port=8888)  # Ensure this matches your redirect URI

@@ -98,6 +98,8 @@
 
 #downloadAnotherButton {
     --glow-color: #b91d82;
+    margin-top: 20px;
+    /* padding-top: 20px; */
 }
 
 .button-container {
@@ -156,6 +158,13 @@
     position: relative;
     top: 50px;
     animation: blink 1s infinite;
+}
+
+#downloadingMessage {
+    color: #1db954; /* Spotify green color */
+    font-size: 18px;
+    margin-bottom: 20px; /* Add some bottom margin */
+    padding-bottom: 50px;
 }
 
 @keyframes blink {

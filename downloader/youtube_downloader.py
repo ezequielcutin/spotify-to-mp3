@@ -1,14 +1,26 @@
-from googleapiclient.discovery import build
-import yt_dlp as youtube_dl
+"""Module for searching and downloading audio from YouTube videos."""
+
 import os
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+import yt_dlp as youtube_dl
+from google.auth.exceptions import GoogleAuthError
+from requests.exceptions import RequestException
 from dotenv import load_dotenv
 
 load_dotenv()
 
 
-
-
 def search_youtube(query, api_key):
+    """
+    Search YouTube for a video matching the query.
+    Args:
+        query (str): The search query.
+        api_key (str): YouTube API key.
+
+    Returns:
+        str or None: Video ID if found, None otherwise.
+    """
     youtube = build('youtube', 'v3', developerKey=api_key)
     # pylint: disable=no-member
     try:
@@ -27,11 +39,20 @@ def search_youtube(query, api_key):
             print("No videos found.")
             return None
 
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+    except (HttpError, GoogleAuthError) as e:
+        print(f"YouTube API error occurred: {str(e)}")
+        return None
+    except RequestException as e:
+        print(f"Network error occurred: {str(e)}")
         return None
 
 def download_audio(video_id, output_path):
+    """
+    Download audio from a YouTube video.
+    Args:
+        video_id (str): YouTube video ID.
+        output_path (str): Path to save the downloaded audio.
+    """
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -46,31 +67,29 @@ def download_audio(video_id, output_path):
         ydl.download([f'https://www.youtube.com/watch?v={video_id}'])
 
 def get_full_track(track_info):
+    """
+    Search for and download a track from YouTube.
+    Args:
+        track_info (dict): Dictionary containing 'name' and 'artist' keys.
+    Returns:
+        str: Path to the downloaded MP3 file.
+    Raises:
+        YouTubeVideoNotFoundError: If no matching video is found.
+    """
     api_key = os.getenv('YOUTUBE_API_KEY')
     query = f"{track_info['name']} {track_info['artist']}"
     video_id = search_youtube(query, api_key)
     if video_id:
-        output_path = os.path.join(os.path.expanduser('~/Downloads'), f"{track_info['name']}_{track_info['artist']}.%(ext)s")
+        filename = f"{track_info['name']}_{track_info['artist']}.%(ext)s"
+        output_path = os.path.join(os.path.expanduser('~/Downloads'), filename)
         download_audio(video_id, output_path)
         return output_path.replace('%(ext)s', 'mp3')
     else:
-        raise Exception("No YouTube video found for the track")
+        raise YouTubeVideoNotFoundError(
+            f"No YouTube video found for '{track_info['name']}' "
+            f"by {track_info['artist']}"
+        )
 
 
-if __name__ == "__main__":
-    api_key = os.getenv('YOUTUBE_API_KEY')
-    query = "Rufus Du Sol Like an Animal"
-    video_id = search_youtube(query, api_key)
-    
-    if video_id:
-        output_path = os.path.join(os.path.expanduser('~/Downloads'), f"Rufus_Du_Sol_Like_an_Animal.%(ext)s")
-        try:
-            download_audio(video_id, output_path)
-            print(f"Successfully downloaded: {output_path.replace('%(ext)s', 'mp3')}")
-        except Exception as e:
-            print(f"Error downloading audio: {str(e)}")
-            print("Full error:")
-            import traceback
-            traceback.print_exc()
-    else:
-        print("Failed to find the video.")
+class YouTubeVideoNotFoundError(Exception):
+    """Exception raised when a YouTube video is not found."""
