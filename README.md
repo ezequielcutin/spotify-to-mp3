@@ -11,6 +11,8 @@ This project allows you to download an MP3 file from a Spotify song and enhance 
 - **Metadata Enhancement**: Embed essential information like track title, artist, album, and cover art into MP3 files using the `mutagen` library.
 - **Error Handling and Logging**: Comprehensive error handling and logging for debugging purposes.
 - **Automated Tests**: Validate the functionality of each component with high test coverage.
+- **YouTube API Integration**: Download longer song durations using the YouTube API.
+- **Responsive Webpage**: The webpage is designed to be responsive for various devices.
 
 ## Setup
 
@@ -120,8 +122,6 @@ The modular design of this project allows for easy scalability:
 
 ## Future Enhancements
 
-- More responsibe webpage.
-- Accessing Google/Youtube APIs for longer song duration (currently we only get 30 second preview due to Spotify API rules).
 - Implement playlist downloading functionality.
 - Add support for other music streaming platforms.
 - Integrate a caching mechanism to improve performance for frequently accessed tracks.
